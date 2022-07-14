@@ -1,0 +1,12 @@
+# Supabase
+**/supabase/.branches
+**/supabase/.temp
+
+node_modules
+
+/.env
+/.env.staging
+/.env.development
+/.env.production
+
+/contracts/types
