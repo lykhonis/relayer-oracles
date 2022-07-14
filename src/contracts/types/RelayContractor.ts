@@ -21,19 +21,21 @@ export interface EventOptions {
   topics?: string[];
 }
 
-export type ExecutedRelayCall = ContractEventLog<{
+export type Executed = ContractEventLog<{
   profile: string;
-  keyManager: string;
-  gasUsed: string;
-  gasPrice: string;
+  transaction: string;
   0: string;
   1: string;
-  2: string;
-  3: string;
 }>;
 export type Initialized = ContractEventLog<{
   version: string;
   0: string;
+}>;
+export type OraclesChanged = ContractEventLog<{
+  previous: string;
+  current: string;
+  0: string;
+  1: string;
 }>;
 export type OwnershipTransferred = ContractEventLog<{
   previousOwner: string;
@@ -50,23 +52,16 @@ export interface RelayContractor extends BaseContract {
   ): RelayContractor;
   clone(): RelayContractor;
   methods: {
-    executeRelayCall(
-      keyManager: string,
-      gasPrice: number | string | BN,
-      signature: string | number[],
-      nonce: number | string | BN,
-      payload: string | number[]
-    ): PayableTransactionObject<{
-      success: boolean;
-      result: string;
-      0: boolean;
-      1: string;
-    }>;
+    execute(
+      profile: string,
+      transaction: string | number[]
+    ): NonPayableTransactionObject<void>;
 
     fee(): NonPayableTransactionObject<string>;
 
     initialize(
       owner: string,
+      oracles: string,
       rewardToken: string,
       fee_: number | string | BN
     ): NonPayableTransactionObject<void>;
@@ -84,21 +79,31 @@ export interface RelayContractor extends BaseContract {
 
     setFee(newFee: number | string | BN): NonPayableTransactionObject<void>;
 
+    setOracles(newOracles: string): NonPayableTransactionObject<void>;
+
     setRewardToken(newRewardToken: string): NonPayableTransactionObject<void>;
+
+    submitUsage(
+      transaction: string | number[],
+      used: number | string | BN
+    ): NonPayableTransactionObject<void>;
 
     transferOwnership(newOwner: string): NonPayableTransactionObject<void>;
   };
   events: {
-    ExecutedRelayCall(cb?: Callback<ExecutedRelayCall>): EventEmitter;
-    ExecutedRelayCall(
-      options?: EventOptions,
-      cb?: Callback<ExecutedRelayCall>
-    ): EventEmitter;
+    Executed(cb?: Callback<Executed>): EventEmitter;
+    Executed(options?: EventOptions, cb?: Callback<Executed>): EventEmitter;
 
     Initialized(cb?: Callback<Initialized>): EventEmitter;
     Initialized(
       options?: EventOptions,
       cb?: Callback<Initialized>
+    ): EventEmitter;
+
+    OraclesChanged(cb?: Callback<OraclesChanged>): EventEmitter;
+    OraclesChanged(
+      options?: EventOptions,
+      cb?: Callback<OraclesChanged>
     ): EventEmitter;
 
     OwnershipTransferred(cb?: Callback<OwnershipTransferred>): EventEmitter;
@@ -110,18 +115,21 @@ export interface RelayContractor extends BaseContract {
     allEvents(options?: EventOptions, cb?: Callback<EventLog>): EventEmitter;
   };
 
-  once(event: "ExecutedRelayCall", cb: Callback<ExecutedRelayCall>): void;
-  once(
-    event: "ExecutedRelayCall",
-    options: EventOptions,
-    cb: Callback<ExecutedRelayCall>
-  ): void;
+  once(event: "Executed", cb: Callback<Executed>): void;
+  once(event: "Executed", options: EventOptions, cb: Callback<Executed>): void;
 
   once(event: "Initialized", cb: Callback<Initialized>): void;
   once(
     event: "Initialized",
     options: EventOptions,
     cb: Callback<Initialized>
+  ): void;
+
+  once(event: "OraclesChanged", cb: Callback<OraclesChanged>): void;
+  once(
+    event: "OraclesChanged",
+    options: EventOptions,
+    cb: Callback<OraclesChanged>
   ): void;
 
   once(event: "OwnershipTransferred", cb: Callback<OwnershipTransferred>): void;
