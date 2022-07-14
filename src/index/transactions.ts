@@ -19,6 +19,7 @@ const contract = new web3.eth.Contract(
 type ExecutedTransaction = {
   profile: string
   transactionHash: string
+  blockNumber: number
 }
 
 const main = async () => {
@@ -39,6 +40,7 @@ const main = async () => {
           executedTransactions.push({
             profile: event.returnValues.profile,
             transactionHash: Web3.utils.toHex(event.returnValues.transaction),
+            blockNumber: event.blockNumber,
           })
           signal.notify()
         }
@@ -93,14 +95,19 @@ const main = async () => {
             retryUpdate = 0
           } else {
             const used = Web3.utils.toBN(receipt.gasUsed).mul(Web3.utils.toBN(receipt.effectiveGasPrice))
-            await contract.methods.submitUsage(transaction.hash, used).send({
-              gas: 100_000,
-              from: web3.eth.defaultAccount as string,
-            })
-            console.log(`Confirmed: ${transaction.hash} (fee: ${Web3.utils.fromWei(used)})`)
+            console.log(`Submitting usage: ${transaction.hash} (fee: ${Web3.utils.fromWei(used)})`)
+            try {
+              await contract.methods.submitUsage(transaction.hash, used).send({
+                gas: 100_000,
+                from: web3.eth.defaultAccount as string,
+              })
+            } catch (e) {
+              console.error(e)
+            }
+            console.log(`Confirmed: ${transaction.hash}`)
           }
           executedTransactions.shift()
-          lastProcssedBlock = transaction.blockNumber as number
+          lastProcssedBlock = tx.blockNumber
           await mayCheckin()
           break
         }
