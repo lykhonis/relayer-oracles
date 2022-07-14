@@ -52,6 +52,8 @@ const main = async () => {
     }
   }
 
+  let retry = 0
+
   while (true) {
     if (!pendingTransactions.length) {
       console.log('Waiting...')
@@ -70,7 +72,17 @@ const main = async () => {
           if (error) {
             console.error(error)
           } else if (!data) {
-            console.log(`No transaction was found: ${tx.transactionHash}`)
+            retry++
+            console.log(`Not found (${retry}): ${tx.transactionHash}`)
+            if (retry < 10) {
+              const delay = 1000 * retry
+              console.log(`Retrying in ${delay / 1000}s`)
+              await timeout(delay)
+              continue
+            }
+            retry = 0
+          } else {
+            console.log(`Confirmed: ${tx.transactionHash}`)
           }
           pendingTransactions.shift()
           lastProcssedBlock = tx.blockNumber
