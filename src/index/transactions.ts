@@ -37,6 +37,7 @@ const main = async () => {
         if (error) {
           console.error(error)
         } else {
+          console.log(event)
           executedTransactions.push({
             profile: event.returnValues.profile,
             transactionHash: Web3.utils.toHex(event.returnValues.transaction),
