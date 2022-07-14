@@ -12,204 +12,6 @@ export interface paths {
       };
     };
   };
-  "/index_checkpoint": {
-    get: {
-      parameters: {
-        query: {
-          id?: parameters["rowFilter.index_checkpoint.id"];
-          contract?: parameters["rowFilter.index_checkpoint.contract"];
-          created_at?: parameters["rowFilter.index_checkpoint.created_at"];
-          updated_at?: parameters["rowFilter.index_checkpoint.updated_at"];
-          block?: parameters["rowFilter.index_checkpoint.block"];
-          /** Filtering Columns */
-          select?: parameters["select"];
-          /** Ordering */
-          order?: parameters["order"];
-          /** Limiting and Pagination */
-          offset?: parameters["offset"];
-          /** Limiting and Pagination */
-          limit?: parameters["limit"];
-        };
-        header: {
-          /** Limiting and Pagination */
-          Range?: parameters["range"];
-          /** Limiting and Pagination */
-          "Range-Unit"?: parameters["rangeUnit"];
-          /** Preference */
-          Prefer?: parameters["preferCount"];
-        };
-      };
-      responses: {
-        /** OK */
-        200: {
-          schema: definitions["index_checkpoint"][];
-        };
-        /** Partial Content */
-        206: unknown;
-      };
-    };
-    post: {
-      parameters: {
-        body: {
-          /** index_checkpoint */
-          index_checkpoint?: definitions["index_checkpoint"];
-        };
-        query: {
-          /** Filtering Columns */
-          select?: parameters["select"];
-        };
-        header: {
-          /** Preference */
-          Prefer?: parameters["preferReturn"];
-        };
-      };
-      responses: {
-        /** Created */
-        201: unknown;
-      };
-    };
-    delete: {
-      parameters: {
-        query: {
-          id?: parameters["rowFilter.index_checkpoint.id"];
-          contract?: parameters["rowFilter.index_checkpoint.contract"];
-          created_at?: parameters["rowFilter.index_checkpoint.created_at"];
-          updated_at?: parameters["rowFilter.index_checkpoint.updated_at"];
-          block?: parameters["rowFilter.index_checkpoint.block"];
-        };
-        header: {
-          /** Preference */
-          Prefer?: parameters["preferReturn"];
-        };
-      };
-      responses: {
-        /** No Content */
-        204: never;
-      };
-    };
-    patch: {
-      parameters: {
-        query: {
-          id?: parameters["rowFilter.index_checkpoint.id"];
-          contract?: parameters["rowFilter.index_checkpoint.contract"];
-          created_at?: parameters["rowFilter.index_checkpoint.created_at"];
-          updated_at?: parameters["rowFilter.index_checkpoint.updated_at"];
-          block?: parameters["rowFilter.index_checkpoint.block"];
-        };
-        body: {
-          /** index_checkpoint */
-          index_checkpoint?: definitions["index_checkpoint"];
-        };
-        header: {
-          /** Preference */
-          Prefer?: parameters["preferReturn"];
-        };
-      };
-      responses: {
-        /** No Content */
-        204: never;
-      };
-    };
-  };
-  "/staked_token": {
-    get: {
-      parameters: {
-        query: {
-          id?: parameters["rowFilter.staked_token.id"];
-          created_at?: parameters["rowFilter.staked_token.created_at"];
-          updated_at?: parameters["rowFilter.staked_token.updated_at"];
-          account?: parameters["rowFilter.staked_token.account"];
-          rewards?: parameters["rowFilter.staked_token.rewards"];
-          /** Filtering Columns */
-          select?: parameters["select"];
-          /** Ordering */
-          order?: parameters["order"];
-          /** Limiting and Pagination */
-          offset?: parameters["offset"];
-          /** Limiting and Pagination */
-          limit?: parameters["limit"];
-        };
-        header: {
-          /** Limiting and Pagination */
-          Range?: parameters["range"];
-          /** Limiting and Pagination */
-          "Range-Unit"?: parameters["rangeUnit"];
-          /** Preference */
-          Prefer?: parameters["preferCount"];
-        };
-      };
-      responses: {
-        /** OK */
-        200: {
-          schema: definitions["staked_token"][];
-        };
-        /** Partial Content */
-        206: unknown;
-      };
-    };
-    post: {
-      parameters: {
-        body: {
-          /** staked_token */
-          staked_token?: definitions["staked_token"];
-        };
-        query: {
-          /** Filtering Columns */
-          select?: parameters["select"];
-        };
-        header: {
-          /** Preference */
-          Prefer?: parameters["preferReturn"];
-        };
-      };
-      responses: {
-        /** Created */
-        201: unknown;
-      };
-    };
-    delete: {
-      parameters: {
-        query: {
-          id?: parameters["rowFilter.staked_token.id"];
-          created_at?: parameters["rowFilter.staked_token.created_at"];
-          updated_at?: parameters["rowFilter.staked_token.updated_at"];
-          account?: parameters["rowFilter.staked_token.account"];
-          rewards?: parameters["rowFilter.staked_token.rewards"];
-        };
-        header: {
-          /** Preference */
-          Prefer?: parameters["preferReturn"];
-        };
-      };
-      responses: {
-        /** No Content */
-        204: never;
-      };
-    };
-    patch: {
-      parameters: {
-        query: {
-          id?: parameters["rowFilter.staked_token.id"];
-          created_at?: parameters["rowFilter.staked_token.created_at"];
-          updated_at?: parameters["rowFilter.staked_token.updated_at"];
-          account?: parameters["rowFilter.staked_token.account"];
-          rewards?: parameters["rowFilter.staked_token.rewards"];
-        };
-        body: {
-          /** staked_token */
-          staked_token?: definitions["staked_token"];
-        };
-        header: {
-          /** Preference */
-          Prefer?: parameters["preferReturn"];
-        };
-      };
-      responses: {
-        /** No Content */
-        204: never;
-      };
-    };
-  };
   "/tasks": {
     get: {
       parameters: {
@@ -318,49 +120,108 @@ export interface paths {
       };
     };
   };
+  "/index_checkpoint": {
+    get: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.index_checkpoint.id"];
+          contract?: parameters["rowFilter.index_checkpoint.contract"];
+          created_at?: parameters["rowFilter.index_checkpoint.created_at"];
+          updated_at?: parameters["rowFilter.index_checkpoint.updated_at"];
+          block?: parameters["rowFilter.index_checkpoint.block"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["index_checkpoint"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+    post: {
+      parameters: {
+        body: {
+          /** index_checkpoint */
+          index_checkpoint?: definitions["index_checkpoint"];
+        };
+        query: {
+          /** Filtering Columns */
+          select?: parameters["select"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** Created */
+        201: unknown;
+      };
+    };
+    delete: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.index_checkpoint.id"];
+          contract?: parameters["rowFilter.index_checkpoint.contract"];
+          created_at?: parameters["rowFilter.index_checkpoint.created_at"];
+          updated_at?: parameters["rowFilter.index_checkpoint.updated_at"];
+          block?: parameters["rowFilter.index_checkpoint.block"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+    patch: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.index_checkpoint.id"];
+          contract?: parameters["rowFilter.index_checkpoint.contract"];
+          created_at?: parameters["rowFilter.index_checkpoint.created_at"];
+          updated_at?: parameters["rowFilter.index_checkpoint.updated_at"];
+          block?: parameters["rowFilter.index_checkpoint.block"];
+        };
+        body: {
+          /** index_checkpoint */
+          index_checkpoint?: definitions["index_checkpoint"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+  };
 }
 
 export interface definitions {
-  index_checkpoint: {
-    /**
-     * Format: bigint
-     * @description Note:
-     * This is a Primary Key.<pk/>
-     */
-    id: number;
-    /** Format: text */
-    contract: string;
-    /**
-     * Format: timestamp with time zone
-     * @default now()
-     */
-    created_at: string;
-    /**
-     * Format: timestamp with time zone
-     * @default now()
-     */
-    updated_at: string;
-    /** Format: bigint */
-    block: number;
-  };
-  staked_token: {
-    /** Format: bigint */
-    id: number;
-    /**
-     * Format: timestamp with time zone
-     * @default now()
-     */
-    created_at: string;
-    /**
-     * Format: timestamp with time zone
-     * @default now()
-     */
-    updated_at?: string;
-    /** Format: text */
-    account: string;
-    /** Format: text */
-    rewards: string;
-  };
   tasks: {
     /** Format: bigint */
     id: number;
@@ -388,6 +249,28 @@ export interface definitions {
     key_manager: string;
     /** Format: text */
     profile?: string;
+  };
+  index_checkpoint: {
+    /**
+     * Format: bigint
+     * @description Note:
+     * This is a Primary Key.<pk/>
+     */
+    id: number;
+    /** Format: text */
+    contract: string;
+    /**
+     * Format: timestamp with time zone
+     * @default now()
+     */
+    created_at: string;
+    /**
+     * Format: timestamp with time zone
+     * @default now()
+     */
+    updated_at: string;
+    /** Format: bigint */
+    block: number;
   };
 }
 
@@ -424,30 +307,6 @@ export interface parameters {
   offset: string;
   /** @description Limiting and Pagination */
   limit: string;
-  /** @description index_checkpoint */
-  "body.index_checkpoint": definitions["index_checkpoint"];
-  /** Format: bigint */
-  "rowFilter.index_checkpoint.id": string;
-  /** Format: text */
-  "rowFilter.index_checkpoint.contract": string;
-  /** Format: timestamp with time zone */
-  "rowFilter.index_checkpoint.created_at": string;
-  /** Format: timestamp with time zone */
-  "rowFilter.index_checkpoint.updated_at": string;
-  /** Format: bigint */
-  "rowFilter.index_checkpoint.block": string;
-  /** @description staked_token */
-  "body.staked_token": definitions["staked_token"];
-  /** Format: bigint */
-  "rowFilter.staked_token.id": string;
-  /** Format: timestamp with time zone */
-  "rowFilter.staked_token.created_at": string;
-  /** Format: timestamp with time zone */
-  "rowFilter.staked_token.updated_at": string;
-  /** Format: text */
-  "rowFilter.staked_token.account": string;
-  /** Format: text */
-  "rowFilter.staked_token.rewards": string;
   /** @description tasks */
   "body.tasks": definitions["tasks"];
   /** Format: bigint */
@@ -466,6 +325,18 @@ export interface parameters {
   "rowFilter.tasks.key_manager": string;
   /** Format: text */
   "rowFilter.tasks.profile": string;
+  /** @description index_checkpoint */
+  "body.index_checkpoint": definitions["index_checkpoint"];
+  /** Format: bigint */
+  "rowFilter.index_checkpoint.id": string;
+  /** Format: text */
+  "rowFilter.index_checkpoint.contract": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.index_checkpoint.created_at": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.index_checkpoint.updated_at": string;
+  /** Format: bigint */
+  "rowFilter.index_checkpoint.block": string;
 }
 
 export interface operations {}

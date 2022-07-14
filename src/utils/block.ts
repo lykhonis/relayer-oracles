@@ -1,5 +1,5 @@
 import { SupabaseClient } from '@supabase/supabase-js'
-import { definitions } from 'types/supabase'
+import { definitions } from '../types/supabase'
 
 export const queryLastCheckedBlock = async (client: SupabaseClient, contract: string) => {
   const { data, error } = await client
