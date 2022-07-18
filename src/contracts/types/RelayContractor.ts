@@ -8,7 +8,6 @@ import type { EventLog } from "web3-core";
 import type { EventEmitter } from "events";
 import type {
   Callback,
-  PayableTransactionObject,
   NonPayableTransactionObject,
   BlockType,
   ContractEventLog,
@@ -21,12 +20,6 @@ export interface EventOptions {
   topics?: string[];
 }
 
-export type Executed = ContractEventLog<{
-  profile: string;
-  transaction: string;
-  0: string;
-  1: string;
-}>;
 export type Initialized = ContractEventLog<{
   version: string;
   0: string;
@@ -52,11 +45,6 @@ export interface RelayContractor extends BaseContract {
   ): RelayContractor;
   clone(): RelayContractor;
   methods: {
-    execute(
-      profile: string,
-      transaction: string | number[]
-    ): NonPayableTransactionObject<void>;
-
     fee(): NonPayableTransactionObject<string>;
 
     initialize(
@@ -84,6 +72,7 @@ export interface RelayContractor extends BaseContract {
     setRewardToken(newRewardToken: string): NonPayableTransactionObject<void>;
 
     submitUsage(
+      profile: string,
       transaction: string | number[],
       used: number | string | BN
     ): NonPayableTransactionObject<void>;
@@ -91,9 +80,6 @@ export interface RelayContractor extends BaseContract {
     transferOwnership(newOwner: string): NonPayableTransactionObject<void>;
   };
   events: {
-    Executed(cb?: Callback<Executed>): EventEmitter;
-    Executed(options?: EventOptions, cb?: Callback<Executed>): EventEmitter;
-
     Initialized(cb?: Callback<Initialized>): EventEmitter;
     Initialized(
       options?: EventOptions,
@@ -114,9 +100,6 @@ export interface RelayContractor extends BaseContract {
 
     allEvents(options?: EventOptions, cb?: Callback<EventLog>): EventEmitter;
   };
-
-  once(event: "Executed", cb: Callback<Executed>): void;
-  once(event: "Executed", options: EventOptions, cb: Callback<Executed>): void;
 
   once(event: "Initialized", cb: Callback<Initialized>): void;
   once(

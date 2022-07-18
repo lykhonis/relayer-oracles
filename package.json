@@ -11,12 +11,13 @@
     "lint:js": "eslint --ignore-path .gitignore .",
     "lint:js:fix": "eslint --ignore-path .gitignore . --fix",
     "build": "tsc",
-    "index": "ts-node --cwd src/index",
+    "task": "ts-node --cwd src/tasks",
     "compile:contract:types": "typechain --target web3-v1 --out-dir 'src/contracts/types' 'src/contracts/abi/*.json'",
     "db:generate-types": "dotenv -- cross-var npx openapi-typescript \"%DATABASE_URL%/rest/v1/?apikey=%DATABASE_KEY%\" --prettier-config .prettierrc --output src/types/supabase.ts --version 2"
   },
   "devDependencies": {
     "@typechain/web3-v1": "^6.0.0",
+    "@types/express": "^4.17.13",
     "@types/node": "^17.0.35",
     "@types/node-fetch": "2",
     "cross-var": "^1.1.0",
@@ -32,6 +33,7 @@
     "@supabase/supabase-js": "^1.35.3",
     "bn.js": "^5.2.0",
     "dotenv": "^16.0.1",
+    "express": "^4.18.1",
     "node-fetch": "2",
     "web3": "^1.7.3"
   }
