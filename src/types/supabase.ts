@@ -19,7 +19,6 @@ export interface paths {
           id?: parameters["rowFilter.tasks.id"];
           created_at?: parameters["rowFilter.tasks.created_at"];
           updated_at?: parameters["rowFilter.tasks.updated_at"];
-          uuid?: parameters["rowFilter.tasks.uuid"];
           transaction_hash?: parameters["rowFilter.tasks.transaction_hash"];
           status?: parameters["rowFilter.tasks.status"];
           key_manager?: parameters["rowFilter.tasks.key_manager"];
@@ -77,7 +76,6 @@ export interface paths {
           id?: parameters["rowFilter.tasks.id"];
           created_at?: parameters["rowFilter.tasks.created_at"];
           updated_at?: parameters["rowFilter.tasks.updated_at"];
-          uuid?: parameters["rowFilter.tasks.uuid"];
           transaction_hash?: parameters["rowFilter.tasks.transaction_hash"];
           status?: parameters["rowFilter.tasks.status"];
           key_manager?: parameters["rowFilter.tasks.key_manager"];
@@ -99,7 +97,6 @@ export interface paths {
           id?: parameters["rowFilter.tasks.id"];
           created_at?: parameters["rowFilter.tasks.created_at"];
           updated_at?: parameters["rowFilter.tasks.updated_at"];
-          uuid?: parameters["rowFilter.tasks.uuid"];
           transaction_hash?: parameters["rowFilter.tasks.transaction_hash"];
           status?: parameters["rowFilter.tasks.status"];
           key_manager?: parameters["rowFilter.tasks.key_manager"];
@@ -108,6 +105,210 @@ export interface paths {
         body: {
           /** tasks */
           tasks?: definitions["tasks"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+  };
+  "/services": {
+    get: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.services.id"];
+          key_manager?: parameters["rowFilter.services.key_manager"];
+          created_at?: parameters["rowFilter.services.created_at"];
+          updated_at?: parameters["rowFilter.services.updated_at"];
+          api_key?: parameters["rowFilter.services.api_key"];
+          contracts?: parameters["rowFilter.services.contracts"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["services"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+    post: {
+      parameters: {
+        body: {
+          /** services */
+          services?: definitions["services"];
+        };
+        query: {
+          /** Filtering Columns */
+          select?: parameters["select"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** Created */
+        201: unknown;
+      };
+    };
+    delete: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.services.id"];
+          key_manager?: parameters["rowFilter.services.key_manager"];
+          created_at?: parameters["rowFilter.services.created_at"];
+          updated_at?: parameters["rowFilter.services.updated_at"];
+          api_key?: parameters["rowFilter.services.api_key"];
+          contracts?: parameters["rowFilter.services.contracts"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+    patch: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.services.id"];
+          key_manager?: parameters["rowFilter.services.key_manager"];
+          created_at?: parameters["rowFilter.services.created_at"];
+          updated_at?: parameters["rowFilter.services.updated_at"];
+          api_key?: parameters["rowFilter.services.api_key"];
+          contracts?: parameters["rowFilter.services.contracts"];
+        };
+        body: {
+          /** services */
+          services?: definitions["services"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+  };
+  "/users": {
+    get: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.users.id"];
+          profile?: parameters["rowFilter.users.profile"];
+          created_at?: parameters["rowFilter.users.created_at"];
+          updated_at?: parameters["rowFilter.users.updated_at"];
+          quota_used?: parameters["rowFilter.users.quota_used"];
+          quota_start_date?: parameters["rowFilter.users.quota_start_date"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["users"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+    post: {
+      parameters: {
+        body: {
+          /** users */
+          users?: definitions["users"];
+        };
+        query: {
+          /** Filtering Columns */
+          select?: parameters["select"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** Created */
+        201: unknown;
+      };
+    };
+    delete: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.users.id"];
+          profile?: parameters["rowFilter.users.profile"];
+          created_at?: parameters["rowFilter.users.created_at"];
+          updated_at?: parameters["rowFilter.users.updated_at"];
+          quota_used?: parameters["rowFilter.users.quota_used"];
+          quota_start_date?: parameters["rowFilter.users.quota_start_date"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+    patch: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.users.id"];
+          profile?: parameters["rowFilter.users.profile"];
+          created_at?: parameters["rowFilter.users.created_at"];
+          updated_at?: parameters["rowFilter.users.updated_at"];
+          quota_used?: parameters["rowFilter.users.quota_used"];
+          quota_start_date?: parameters["rowFilter.users.quota_start_date"];
+        };
+        body: {
+          /** users */
+          users?: definitions["users"];
         };
         header: {
           /** Preference */
@@ -236,8 +437,6 @@ export interface definitions {
      */
     updated_at?: string;
     /** Format: text */
-    uuid: string;
-    /** Format: text */
     transaction_hash: string;
     /**
      * Format: public.tasks_status
@@ -249,6 +448,60 @@ export interface definitions {
     key_manager: string;
     /** Format: text */
     profile?: string;
+  };
+  services: {
+    /**
+     * Format: bigint
+     * @description Note:
+     * This is a Primary Key.<pk/>
+     */
+    id: number;
+    /** Format: text */
+    key_manager: string;
+    /**
+     * Format: timestamp with time zone
+     * @default now()
+     */
+    created_at: string;
+    /**
+     * Format: timestamp with time zone
+     * @default now()
+     */
+    updated_at: string;
+    /** Format: text */
+    api_key?: string;
+    /** Format: jsonb */
+    contracts?: unknown;
+  };
+  users: {
+    /**
+     * Format: bigint
+     * @description Note:
+     * This is a Primary Key.<pk/>
+     */
+    id: number;
+    /** Format: text */
+    profile: string;
+    /**
+     * Format: timestamp with time zone
+     * @default now()
+     */
+    created_at: string;
+    /**
+     * Format: timestamp with time zone
+     * @default now()
+     */
+    updated_at: string;
+    /**
+     * Format: bigint
+     * @default 0
+     */
+    quota_used: number;
+    /**
+     * Format: timestamp with time zone
+     * @default now()
+     */
+    quota_start_date: string;
   };
   index_checkpoint: {
     /**
@@ -316,8 +569,6 @@ export interface parameters {
   /** Format: timestamp with time zone */
   "rowFilter.tasks.updated_at": string;
   /** Format: text */
-  "rowFilter.tasks.uuid": string;
-  /** Format: text */
   "rowFilter.tasks.transaction_hash": string;
   /** Format: public.tasks_status */
   "rowFilter.tasks.status": string;
@@ -325,6 +576,34 @@ export interface parameters {
   "rowFilter.tasks.key_manager": string;
   /** Format: text */
   "rowFilter.tasks.profile": string;
+  /** @description services */
+  "body.services": definitions["services"];
+  /** Format: bigint */
+  "rowFilter.services.id": string;
+  /** Format: text */
+  "rowFilter.services.key_manager": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.services.created_at": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.services.updated_at": string;
+  /** Format: text */
+  "rowFilter.services.api_key": string;
+  /** Format: jsonb */
+  "rowFilter.services.contracts": string;
+  /** @description users */
+  "body.users": definitions["users"];
+  /** Format: bigint */
+  "rowFilter.users.id": string;
+  /** Format: text */
+  "rowFilter.users.profile": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.users.created_at": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.users.updated_at": string;
+  /** Format: bigint */
+  "rowFilter.users.quota_used": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.users.quota_start_date": string;
   /** @description index_checkpoint */
   "body.index_checkpoint": definitions["index_checkpoint"];
   /** Format: bigint */
@@ -338,7 +617,3 @@ export interface parameters {
   /** Format: bigint */
   "rowFilter.index_checkpoint.block": string;
 }
-
-export interface operations {}
-
-export interface external {}

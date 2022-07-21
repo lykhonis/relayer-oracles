@@ -35,7 +35,7 @@ const signed = (request: Request, response: Response, next: NextFunction) => {
   next()
 }
 
-const submitTransaction = async (profile: string, transactionHash: string) => {
+const submitTransaction = async (profile: string | undefined, transactionHash: string) => {
   try {
     const receipt = await web3.eth.getTransactionReceipt(transactionHash)
     if (!receipt) {
@@ -50,13 +50,15 @@ const submitTransaction = async (profile: string, transactionHash: string) => {
     if (error) {
       console.error(error)
     } else {
-      const used = Web3.utils.toBN(receipt.gasUsed).mul(Web3.utils.toBN(receipt.effectiveGasPrice))
-      console.log(`Submitting usage: ${transactionHash} (fee: ${Web3.utils.fromWei(used)})`)
-      await contract.methods.submitUsage(profile, transactionHash, used)
-        .send({
-          gas: 200_000,
-          from: web3.eth.defaultAccount as string,
-        })
+      if (profile) {
+        const used = Web3.utils.toBN(receipt.gasUsed).mul(Web3.utils.toBN(receipt.effectiveGasPrice))
+        console.log(`Submitting usage: ${transactionHash} (fee: ${Web3.utils.fromWei(used)})`)
+        await contract.methods.submitUsage(profile, transactionHash, used)
+          .send({
+            gas: 200_000,
+            from: web3.eth.defaultAccount as string,
+          })
+      }
       console.log(`Confirmed: ${transactionHash}`)
     }
   } catch (e) {
@@ -64,7 +66,7 @@ const submitTransaction = async (profile: string, transactionHash: string) => {
   }
 }
 
-const monitorTransaction = async (profile: string, transactionHash: string) => {
+const monitorTransaction = async (profile: string | undefined, transactionHash: string) => {
   const receipt = await web3.eth.getTransactionReceipt(transactionHash)
   if (receipt) {
     await submitTransaction(profile, transactionHash)
@@ -94,7 +96,7 @@ const monitorTransaction = async (profile: string, transactionHash: string) => {
 
 app.put('/transaction', signed, (request, response) => {
   const { transactionHash, profile } = request.body?.data
-  if (!transactionHash || !profile) {
+  if (!transactionHash) {
     response.status(400).json({ error: 'invalid request' })
     return
   }
