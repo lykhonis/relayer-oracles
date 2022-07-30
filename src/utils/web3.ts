@@ -9,7 +9,7 @@ const provider = new Web3.providers.WebsocketProvider(
     timeout: 30_000,
     clientConfig: {
       keepalive: true,
-      keepaliveInterval: 60_000,
+      keepaliveInterval: 5_000,
     },
     reconnect: {
       auto: true,
