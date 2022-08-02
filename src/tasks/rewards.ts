@@ -2,7 +2,7 @@ import '../utils/env'
 import { abi as RewardTokenAbi } from '../contracts/abi/RewardToken.json'
 import { abi as StakedTokenAbi } from '../contracts/abi/StakedToken.json'
 import { RewardToken, StakedToken } from '../contracts/types'
-import { debuggableSubscription, web3 } from '../utils/web3'
+import { debuggableSubscription, web3, getFeeData } from '../utils/web3'
 import { timeout } from '../utils/timeout'
 import Web3 from 'web3'
 
@@ -27,26 +27,33 @@ const main = async () => {
         if (error) {
           console.error(error)
         } else {
-          console.log(event)
-          stakers.add(event.returnValues.account)
+          const staker = event.returnValues.account.toLowerCase()
+          if (!stakers.has(staker)) {
+            console.log(`New staker: ${staker}`)
+            stakers.add(staker)
+          }
         }
       },
     ),
   )
 
   while (true) {
-    console.log('Observing')
+    console.log('Waiting...')
     await timeout(30 * 60 * 1000)
     for (const staker of Array.from(stakers.values())) {
       try {
-        console.log(`Submitting rewards: ${staker}`)
-        await rewardTokenContract.methods.submitRewards(
-          staker,
-          Web3.utils.toWei('0.01', 'ether'),
-        ).send({
-          gas: 100_000,
+        const amount = Web3.utils.toWei('0.01', 'ether')
+        const submitRewards = rewardTokenContract.methods.submitRewards(staker, amount)
+        const { maxFeePerGas, maxPriorityFeePerGas } = await getFeeData()
+        console.log(`Submitting rewards: ${staker} (${Web3.utils.fromWei(amount, 'ether')} rLYX)`)
+        console.log(`  fees: ${maxFeePerGas} - ${maxPriorityFeePerGas}`)
+        const { transactionHash } = await submitRewards.send({
           from: web3.eth.defaultAccount as string,
+          gas: 100_000,
+          maxFeePerGas,
+          maxPriorityFeePerGas
         })
+        console.log(`  tx hash: ${transactionHash}`)
       } catch (e) {
         console.error(e)
       }

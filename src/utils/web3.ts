@@ -41,3 +41,16 @@ export const debuggableSubscription = (tag: any, emitter: EventEmitter) =>
     .on('error', (error) => console.error(
       `[${tag}] error: (${error})`
     ))
+
+export const getFeeData = async () => {
+  const block = await web3.eth.getBlock('latest')
+  if (!block || !block.baseFeePerGas) {
+    return {}
+  }
+  const maxPriorityFeePerGas = Web3.utils.toBN(Web3.utils.toWei('1.5', 'gwei'))
+  const maxFeePerGas = Web3.utils
+    .toBN(block.baseFeePerGas)
+    .mul(Web3.utils.toBN(2))
+    .add(maxPriorityFeePerGas)
+  return { maxFeePerGas, maxPriorityFeePerGas }
+}
