@@ -19,6 +19,25 @@ const stakedTokenContract = new web3.eth.Contract(
 const main = async () => {
   const stakers = new Set<string>()
 
+  const submitRewards = async (account: string) => {
+    try {
+      const amount = Web3.utils.toWei('0.01', 'ether')
+      const submitRewards = rewardTokenContract.methods.submitRewards(account, amount)
+      const { maxFeePerGas, maxPriorityFeePerGas } = await getFeeData()
+      console.log(`Submitting rewards: ${account} (${Web3.utils.fromWei(amount, 'ether')} rLYX)`)
+      console.log(`  fees: ${maxFeePerGas} - ${maxPriorityFeePerGas}`)
+      const { transactionHash } = await submitRewards.send({
+        from: web3.eth.defaultAccount as string,
+        gas: 100_000,
+        maxFeePerGas,
+        maxPriorityFeePerGas
+      })
+      console.log(`  tx hash: ${transactionHash}`)
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
   debuggableSubscription(
     'AddedStake',
     stakedTokenContract.events.AddedStake(
@@ -40,24 +59,7 @@ const main = async () => {
   while (true) {
     console.log('Waiting...')
     await timeout(30 * 60 * 1000)
-    for (const staker of Array.from(stakers.values())) {
-      try {
-        const amount = Web3.utils.toWei('0.01', 'ether')
-        const submitRewards = rewardTokenContract.methods.submitRewards(staker, amount)
-        const { maxFeePerGas, maxPriorityFeePerGas } = await getFeeData()
-        console.log(`Submitting rewards: ${staker} (${Web3.utils.fromWei(amount, 'ether')} rLYX)`)
-        console.log(`  fees: ${maxFeePerGas} - ${maxPriorityFeePerGas}`)
-        const { transactionHash } = await submitRewards.send({
-          from: web3.eth.defaultAccount as string,
-          gas: 100_000,
-          maxFeePerGas,
-          maxPriorityFeePerGas
-        })
-        console.log(`  tx hash: ${transactionHash}`)
-      } catch (e) {
-        console.error(e)
-      }
-    }
+    Array.from(stakers.values()).forEach((account) => submitRewards(account))
   }
 }
 
