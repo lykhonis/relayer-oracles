@@ -19,20 +19,23 @@ const stakedTokenContract = new web3.eth.Contract(
 const main = async () => {
   const stakers = new Set<string>()
 
+  let nonce = await web3.eth.getTransactionCount(web3.eth.defaultAccount as string)
+  console.log(`Nonce: ${nonce}`)
+
   const submitRewards = async (account: string) => {
     try {
       const amount = Web3.utils.toWei('0.01', 'ether')
       const submitRewards = rewardTokenContract.methods.submitRewards(account, amount)
       const { maxFeePerGas, maxPriorityFeePerGas } = await getFeeData()
-      console.log(`Submitting rewards: ${account} (${Web3.utils.fromWei(amount, 'ether')} rLYX)`)
-      console.log(`  fees: ${maxFeePerGas} - ${maxPriorityFeePerGas}`)
+      console.log(`Submitting rewards: ${account} (${Web3.utils.fromWei(amount, 'ether')} rLYX), fees: ${maxFeePerGas} (${maxPriorityFeePerGas})`)
       const { transactionHash } = await submitRewards.send({
         from: web3.eth.defaultAccount as string,
         gas: 100_000,
+        nonce: nonce++,
         maxFeePerGas,
         maxPriorityFeePerGas
       })
-      console.log(`  tx hash: ${transactionHash}`)
+      console.log(`Tx hash: ${account} - ${transactionHash}`)
     } catch (e) {
       console.error(e)
     }
@@ -56,10 +59,13 @@ const main = async () => {
     ),
   )
 
+  console.log('Warming up...')
+  await timeout(10 * 1000)
+
   while (true) {
     console.log('Waiting...')
-    await timeout(30 * 60 * 1000)
     Array.from(stakers.values()).forEach((account) => submitRewards(account))
+    await timeout(60 * 60 * 1000)
   }
 }
 
